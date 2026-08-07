@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+      content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+
+<title>Skill Wheel ToE CZ</title>
+
+<style>
+html, body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    overflow: hidden;
+}
+
+#player {
+    width: 100vw;
+    height: 100vh;
+}
+
+ruffle-player {
+    width: 100%;
+    height: 100%;
+}
+</style>
+
+<script>
+window.RufflePlayer = window.RufflePlayer || {};
+
+window.RufflePlayer.config = {
+    autoplay: "on",
+    unmuteOverlay: "hidden",
+    splashScreen: false,
+    preloader: true,
+    contextMenu: "off",
+    showSwfDownload: false,
+    scale: "showAll",
+    forceScale: true,
+    letterbox: "fullscreen",
+    allowFullscreen: true,
+    warnOnUnsupportedContent: false,
+    logLevel: "error"
+};
+</script>
+
+<script src="ruffle.js"></script>
+</head>
+
+<body>
+
+<div id="player"></div>
+
+<script>
+window.addEventListener("load", async () => {
+    const ruffle = window.RufflePlayer.newest();
+    const player = ruffle.createPlayer();
+
+    document.getElementById("player").appendChild(player);
+
+    try {
+        await player.ruffle().load({
+            url: "skillwheel3.swf",
+            autoplay: "on"
+        });
+    } catch (e) {
+        document.body.innerHTML =
+            '<div style="color:white;font:18px sans-serif;padding:24px">' +
+            'Skill Wheel se nepodařilo spustit.<br><br>' +
+            String(e) +
+            '</div>';
+    }
+});
+</script>
+
+</body>
+</html>
