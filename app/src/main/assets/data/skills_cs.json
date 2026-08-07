@@ -1,0 +1,20 @@
+{
+  "logistics": {
+    "name": "Logistika",
+    "type": "Hlavní skill",
+    "description": "Zvyšuje pohyb hrdiny po mapě dobrodružství.",
+    "levels": [
+      "Basic: +10 % pohybu",
+      "Advanced: +20 % pohybu",
+      "Expert: +30 % pohybu"
+    ],
+    "requires": [
+      "Žádné"
+    ],
+    "unlocks": [
+      "Pathfinding",
+      "Scouting",
+      "Navigation"
+    ]
+  }
+}
