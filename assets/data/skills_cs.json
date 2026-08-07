@@ -1,0 +1,17 @@
+{
+  "logistics": {
+    "name": "Logistika",
+    "description": "Zvyšuje rychlost pohybu hrdiny na mapě.",
+    "levels": [
+      "Basic +10 %",
+      "Advanced +20 %",
+      "Expert +30 %"
+    ],
+    "requires": [],
+    "unlocks": [
+      "Pathfinding",
+      "Navigation",
+      "Scouting"
+    ]
+  }
+}
