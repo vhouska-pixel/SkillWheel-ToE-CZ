@@ -14,6 +14,7 @@ html, body {
     height: 100%;
     background: #000;
     overflow: hidden;
+    font-family: Arial, sans-serif;
 }
 
 #player {
@@ -24,6 +25,118 @@ html, body {
 ruffle-player {
     width: 100%;
     height: 100%;
+}
+
+/* Překryv panelu */
+#sheetOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.35);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+    z-index: 9998;
+}
+
+/* Spodní panel */
+#skillSheet {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 38vh;
+    min-height: 260px;
+    max-height: 520px;
+    background: #151515;
+    color: white;
+    border-radius: 22px 22px 0 0;
+    box-shadow: 0 -8px 30px rgba(0,0,0,0.55);
+    transform: translateY(105%);
+    transition: transform 0.28s ease;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+}
+
+#skillSheet.open {
+    transform: translateY(0);
+}
+
+#sheetOverlay.open {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+#sheetHandle {
+    width: 58px;
+    height: 5px;
+    border-radius: 999px;
+    background: #777;
+    margin: 10px auto 6px auto;
+}
+
+#sheetHeader {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 8px 18px 12px 18px;
+}
+
+#skillIcon {
+    width: 54px;
+    height: 54px;
+    border-radius: 10px;
+    background: #333;
+    flex: 0 0 auto;
+}
+
+#skillTitleWrap {
+    flex: 1;
+}
+
+#skillTitle {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+}
+
+#skillSubtitle {
+    font-size: 14px;
+    opacity: 0.7;
+    margin-top: 4px;
+}
+
+#closeSheet {
+    border: 0;
+    background: transparent;
+    color: white;
+    font-size: 30px;
+    padding: 6px 10px;
+}
+
+#sheetContent {
+    overflow-y: auto;
+    padding: 0 20px 22px 20px;
+    line-height: 1.45;
+    font-size: 16px;
+}
+
+.sectionTitle {
+    margin-top: 16px;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 17px;
+}
+
+.testButton {
+    position: fixed;
+    right: 14px;
+    top: 14px;
+    z-index: 10000;
+    padding: 10px 14px;
+    border-radius: 12px;
+    border: 0;
+    font-weight: bold;
 }
 </style>
 
@@ -53,7 +166,55 @@ window.RufflePlayer.config = {
 
 <div id="player"></div>
 
+<button class="testButton" onclick="openSkillSheet()">
+    TEST PANEL
+</button>
+
+<div id="sheetOverlay" onclick="closeSkillSheet()"></div>
+
+<div id="skillSheet">
+    <div id="sheetHandle"></div>
+
+    <div id="sheetHeader">
+        <div id="skillIcon"></div>
+
+        <div id="skillTitleWrap">
+            <div id="skillTitle">Logistika</div>
+            <div id="skillSubtitle">Hlavní skill</div>
+        </div>
+
+        <button id="closeSheet" onclick="closeSkillSheet()">×</button>
+    </div>
+
+    <div id="sheetContent">
+        <div>
+            Zvyšuje pohyb hrdiny po mapě dobrodružství.
+        </div>
+
+        <div class="sectionTitle">Úrovně</div>
+        <div>Basic: +10 % pohybu</div>
+        <div>Advanced: +20 % pohybu</div>
+        <div>Expert: +30 % pohybu</div>
+
+        <div class="sectionTitle">Požadavky</div>
+        <div>Žádné</div>
+
+        <div class="sectionTitle">Odemyká</div>
+        <div>Pathfinding, Scouting, Navigation</div>
+    </div>
+</div>
+
 <script>
+function openSkillSheet() {
+    document.getElementById("skillSheet").classList.add("open");
+    document.getElementById("sheetOverlay").classList.add("open");
+}
+
+function closeSkillSheet() {
+    document.getElementById("skillSheet").classList.remove("open");
+    document.getElementById("sheetOverlay").classList.remove("open");
+}
+
 window.addEventListener("load", async () => {
     const ruffle = window.RufflePlayer.newest();
     const player = ruffle.createPlayer();
