@@ -205,7 +205,44 @@ window.RufflePlayer.config = {
 </div>
 
 <script>
-function openSkillSheet() {
+let skillsData = {};
+
+async function loadSkillsData() {
+    try {
+        const response = await fetch("data/skills_cs.json");
+        skillsData = await response.json();
+    } catch (e) {
+        console.error("Nepodařilo se načíst databázi skillů:", e);
+    }
+}
+
+function showSkill(skillId) {
+    const skill = skillsData[skillId];
+
+    if (!skill) {
+        alert("Skill nebyl nalezen: " + skillId);
+        return;
+    }
+
+    document.getElementById("skillTitle").textContent = skill.name;
+    document.getElementById("skillSubtitle").textContent = skill.type;
+
+    document.getElementById("sheetContent").innerHTML = `
+        <div>${skill.description}</div>
+
+        <div class="sectionTitle">Úrovně</div>
+        ${skill.levels.map(x => `<div>${x}</div>`).join("")}
+
+        <div class="sectionTitle">Požadavky</div>
+        ${skill.requires.map(x => `<div>${x}</div>`).join("")}
+
+        <div class="sectionTitle">Odemyká</div>
+        ${skill.unlocks.map(x => `<div>${x}</div>`).join("")}
+    `;
+
+    openSkillSheet();
+}
+      function openSkillSheet() {
     document.getElementById("skillSheet").classList.add("open");
     document.getElementById("sheetOverlay").classList.add("open");
 }
